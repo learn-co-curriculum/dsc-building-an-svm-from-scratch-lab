@@ -32,10 +32,6 @@ X, labels = make_blobs(n_features = 2, centers = 2, cluster_std=1.25,  random_st
 plt.scatter(X[:, 0], X[:, 1], c = labels, s=25);
 ```
 
-
-![png](index_files/index_7_0.png)
-
-
 ## Building a Max Margin Classifier
 Recall from the previous lesson that creating a support vector machine actually boils down to solving a convex optimization problem. You can use the the Python library "CVXPY" to do so, more information can be found [here](http://www.cvxpy.org/).
 
@@ -60,26 +56,14 @@ Note that $y^{(i)}$ is the class label here. Looking at our data the labels are 
 
 
 ```python
-labels
+# your code here
 ```
-
-
-
-
-    array([0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1,
-           1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1,
-           1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1,
-           0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1,
-           1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0])
-
-
 
 Before we start to write down the optimization problem, let's split our data in the two classes. Name them `class_1` and `class_2`.
 
 
 ```python
-class_1 = X[labels==0]
-class_2 = X[labels==1]
+# your code here
 ```
 
 Let's find a wat to create a hyperplane (in this case, a line) that can maximize the difference between the two classes. 
@@ -94,36 +78,26 @@ Let's find a wat to create a hyperplane (in this case, a line) that can maximize
 
 
 ```python
-import cvxpy as cp
 
-d = 2  
-m = 50 
-n = 50  
 
 # Define the variables
-w = cp.Variable(d)
-b = cp.Variable()
+
 
 # Define the constraints
-x_constraints = [w.T * class_1[i] + b >= 1  for i in range(m)]
-y_constraints = [w.T * class_2[i] + b <= -1 for i in range(n)]
+
 
 # Sum the constraints
-constraints = x_constraints +  y_constraints 
+
 
 # Define the objective. Hint: use cp.norm
-obj = cp.Minimize(cp.norm(w,2))
+
 
 # Add objective and constraint in the problem
-prob = cp.Problem(obj, constraints)
+
 
 # Solve the problem
-prob.solve()
-print("Problem Status: %s"%prob.status)
+
 ```
-
-    Problem Status: optimal
-
 
 Below, we provide you with a helper function to plot your result.
 
@@ -154,21 +128,6 @@ def plotBoundaries(x, y, w, b):
 
 Now use the helper function to plot your result. To get the values of `w` and `b`. use the two variables with `.value`. The two first arguments should be the two classes, `class_1` and `class_2`.
 
-
-```python
-w=w.value
-b=b.value
-```
-
-
-```python
-plotBoundaries(class_1,class_2,w,b)
-```
-
-
-![png](index_files/index_20_0.png)
-
-
 ## A more complex problem
 
 Let's look at another problem by running the code below. It's clear that now, the two classes are not perfectly linearly separable.
@@ -187,50 +146,12 @@ X, labels = make_blobs(n_features = 2, centers = 2, cluster_std=3,  random_state
 plt.scatter(X[:, 0], X[:, 1], c = labels, s=25);
 ```
 
-
-![png](index_files/index_23_0.png)
-
-
 Copy your optimization code from the Max Margin Classifier and look at the problem status. What do you see?
 
 
 ```python
-class_1 = X[labels==0]
-class_2 = X[labels==1]
+# copy the optimization code
 ```
-
-
-```python
-import cvxpy as cp
-
-d = 2  
-m = 50 
-n = 50  
-
-# Define the variables
-w = cp.Variable(d)
-b = cp.Variable()
-
-# Define the constraints
-x_constraints = [w.T * class_1[i] + b >= 1  for i in range(m)]
-y_constraints = [w.T * class_2[i] + b <= -1 for i in range(n)]
-
-# Sum the constraints
-constraints = x_constraints +  y_constraints 
-
-# Define the objective. Hint: use cp.norm
-obj = cp.Minimize(cp.norm(w,2))
-
-# Add objective and constraint in the problem
-prob = cp.Problem(obj, constraints)
-
-# Solve the problem
-prob.solve()
-print("Problem Status: %s"%prob.status)
-```
-
-    Problem Status: infeasible
-
 
 ### Explain what's happening
 
@@ -272,67 +193,42 @@ plt.scatter(X[:, 0], X[:, 1], c = labels, s=25);
 ```
 
 
-![png](index_files/index_30_0.png)
-
-
-
 ```python
 #reassign the class labels
-class_1 = X[labels==0]
-class_2 = X[labels==1]
+
 ```
 
 
 ```python
-import cvxpy as cp
-
-d = 2  
-m = 50 
-n = 50  
 
 # Define the variables
-w = cp.Variable(d)
-b = cp.Variable()
-ksi_1 = cp.Variable(m)
-ksi_2 = cp.Variable(n)
 
-C=0.01
 
 # Define the constraints
-x_constraints = [w.T * class_1[i] + b >= 1 - ksi_1[i]  for i in range(m)]
-y_constraints = [w.T * class_2[i] + b <= -1 + ksi_2[i] for i in range(n)]
-ksi_1_constraints = [ksi_1 >= 0  for i in range(m)]
-ksi_2_constraints = [ksi_2 >= 0  for i in range(n)]
+
+
+
+
 
 # Sum the constraints
-constraints = x_constraints +  y_constraints + ksi_1_constraints + ksi_2_constraints
 
 # Define the objective. Hint: use cp.norm. Add in a C hyperparameter and assume 1 at first
-obj = cp.Minimize(cp.norm(w,2)+ C * (sum(ksi_1)+ sum(ksi_2)))
+
 
 # Add objective and constraint in the problem
-prob = cp.Problem(obj, constraints)
+
 
 # Solve the problem
-prob.solve()
-print("Problem Status: %s"%prob.status)
+
+
 ```
-
-    Problem Status: optimal
-
 
 Plot your result again
 
 
 ```python
-w=w.value
-b=b.value
-plotBoundaries(class_1,class_2,w,b)
+# your code here
 ```
-
-
-![png](index_files/index_34_0.png)
-
 
 Now go ahead and experiment with the hyperparameter C (making it both larger and smaller than 1). What do you see?
 
