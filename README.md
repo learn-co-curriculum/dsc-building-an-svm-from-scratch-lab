@@ -8,9 +8,8 @@ In this lab, you'll program a simple Support Vector Machine from scratch!
 ## Objectives
 
 You will be able to:
-- Build a simple linear max-margin classifier from scratch
-- Build a simple soft-margin classifier from scratch
-
+- Build a simple linear Max Margin Classifier from scratch
+- Build a simple Soft Margin Classifier from scratch
 
 ## The Data
 
