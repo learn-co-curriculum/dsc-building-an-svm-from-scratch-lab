@@ -37,7 +37,7 @@ Recall from the previous lesson that creating a support vector machine actually 
 
 You may have not used cvxpy before, so make sure it is installed using your terminal and the command `pip install cvxpy`.
 
-Make sure to import `cvxpy` as `cp`. The four important commands to be used here are:
+The four important commands to be used here are:
 
 - `cp.Variable()` where you either don't include antything between `()` or, if the variable is an array with multiple elements, the number of elements.
 - `cp.Minimize()` or `cp.Maximize`, with between the parentheses the element to be maximized.
