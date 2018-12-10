@@ -36,7 +36,9 @@ plt.scatter(X[:, 0], X[:, 1], c = labels, s=25);
 
 
 ## Building a Max Margin Classifier
-Recall from the previous lesson that creating a support vector machine actually boils down to solving a convex optimization problem. You can use the the Python library "CVXPY" to do so, more information can be found [here](http://www.cvxpy.org/).
+Recall from the previous lesson that creating a support vector machine actually boils down to solving a convex optimization problem. You can use the the Python library "cvxpy" to do so, more information can be found [here](http://www.cvxpy.org/).
+
+You may have not used cvxpy before, so make sure it is installed using your terminal and the command `pip install cvxpy`.
 
 The four important commands to be used here are:
 
