@@ -1,5 +1,5 @@
 
-# Building an SVM from scratch - Lab
+# Building an SVM from Scratch - Lab
 
 ## Introduction
 
