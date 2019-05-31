@@ -14,9 +14,9 @@ You will be able to:
 
 ## The Data
 
-Support Vector Machines can be used on for any $n$-dimensional feature space. For this lab however, you'll focus on a more limited 2-dimensional feature space so you can easily visualize the algorithm.
+Support Vector Machines can be used on for any $n$-dimensional feature space. However, for this lab, you'll focus on a more limited 2-dimensional feature space so that you can easily visualize the results.
 
-sci-kit learn has an excellent data set generator. One of them is `make_blobs`. Below, you can find the code to create two blobs using the `make_blobs` function. Afterwards, you'll use this data to build our own SVM from scratch! 
+sci-kit learn has an excellent data set generator. One of them is `make_blobs`. Below, you can find the code to create two blobs using the `make_blobs` function. Afterwards, you'll use this data to build your own SVM from scratch! 
 
 
 ```python
@@ -37,7 +37,7 @@ plt.scatter(X[:, 0], X[:, 1], c = labels, s=25);
 
 
 ## Building a Max Margin Classifier
-Recall from the previous lesson that creating a support vector machine actually boils down to solving a convex optimization problem. You can use the the Python library "cvxpy" to do so, more information can be found [here](http://www.cvxpy.org/).
+Since you are aiming to maximize the margin between the decision boundary and the support vectors, creating a support vector machine boils down to solving a convex optimization problem. As such, you can use the the Python library "cvxpy" to do so. More information can be found [here](http://www.cvxpy.org/).
 
 You may have not used cvxpy before, so make sure it is installed using your terminal and the command `pip install cvxpy`.
 
@@ -48,8 +48,6 @@ The four important commands to be used here are:
 - `cp.Problem(objective, constraints)`, the objective is generally a stored minimization or maximization objective, the constraints are listed constraints. Constraints can be added by a "+" sign. 
 - Next, you should store your `cp.Problem` in an object and use `object.solve()` to solve the optimization problem.
 
-To get more clarity, we strongly recommend to look at the example here. 
-
 Recall that we're trying to solve this problem:
 
 $ w x^{(i)} + b \geq 1$  if $y ^{(i)} = 1$
@@ -58,7 +56,7 @@ $ w x^{(i)} + b \leq -1$  if $y ^{(i)} = -1$
 
 And as an objective function you're maximizing $\dfrac{2}{\lVert w \rVert}$. To make things easier, you can instead minimize $\lVert w \rVert$
 
-Note that $y^{(i)}$ is the class label here. Looking at our data the labels are stored in `labels`. Take a look at the labels by printing them below.
+Note that $y^{(i)}$ is the class label. Take a look at the labels by printing them below.
 
 
 ```python
@@ -84,15 +82,16 @@ class_1 = X[labels==0]
 class_2 = X[labels==1]
 ```
 
-Next, you need to find a way to create a hyperplane (in this case, a line) that can maximize the difference between the two classes. Here's a pseudocode outline:
+Next, you need to find a way to create a hyperplane (in this case, a line) that can maximize the difference between the two classes. 
+Here's a pseudocode outline:
 - First, `import cvxpy as cp`
-- Next, define the variables. note that b and w are variables (what are the dimensions?)
-- Then, build the constraints. We have two constraints here
-- After that, use "+" to group the constraints togethes
+- Next, define the variables. note that b and w are variables (What are the dimensions?)
+- Then, build the constraints.(You have two constraints here.)
+- After that, use "+" to group the constraints together
 - The next step is to define the objective function
 - After that, define the problem using `cp.Problem`
 - Solve the problem using `.solve`
-- After that, print the problem status (however you defined the problem, and attach `.status`.
+- Finally, print the problem status (however you defined the problem, and attach `.status`.
 
 
 ```python
@@ -154,7 +153,7 @@ def plotBoundaries(x, y, w, b):
     plt.ylim([np.floor(np.min([x[:,1],y[:,1]])),np.ceil(np.max([x[:,1],y[:,1]]))])
 ```
 
-Use the helper function to plot your result. To get the values of `w` and `b`. use the two variables with `.value`. The two first arguments should be the two classes, `class_1` and `class_2`.
+Use the helper function to plot your result. To get the values of `w` and `b`, use the two variables with `.value`. The two first arguments should be the two classes, `class_1` and `class_2`.
 
 
 ```python
@@ -234,9 +233,9 @@ print("Problem Status: %s"%prob.status)
     Problem Status: infeasible
 
 
-### Explain what's happening
+### Explain What's Happening
 
-The problem status is "infeasible": the problem is not linearly separable, in other words, it is impossible to draw one straight line that separates the two classes.
+The problem status is "infeasible". In other words, the problem is not linearly separable, and it is impossible to draw one straight line that separates the two classes.
 
 ## Building a Soft Margin Classifier
 
@@ -340,4 +339,4 @@ Now go ahead and experiment with the hyperparameter C (making it both larger and
 
 ## Summary
 
-Great! You now understand the rationale behind support vector machines. Wouldn't it be great to have a library that did this for you? Well, you're lucky: sci-kit learn has an SVM-module which automates all of this. In the next lab, you'll take a look at using this prebuilt SVM tool!
+Great! You now understand the rationale behind support vector machines. Wouldn't it be great to have a library that did this for you? Well, you're lucky: sci-kit learn has an SVM-module which automates all of this. In the next lab, you'll take a look at using this pre-built SVM tool!
