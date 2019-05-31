@@ -14,9 +14,9 @@ You will be able to:
 
 ## The Data
 
-Support Vector Machines can be used on problem cases where we have an $n$-dimensional feature space. For teaching purposes, however, we use a 2-dimensional feature space so you can see what exactly is going on when using support vector machines.
+Support Vector Machines can be used on for any $n$-dimensional feature space. For this lab however, you'll focus on a more limited 2-dimensional feature space so you can easily visualize the algorithm.
 
-Scikit-learn has excellent data sets generator. one of them is `make_blobs`. Below, you can find the code to create two blobs using the `make_blobs` function. We will use this data to build our own SVM from scratch! 
+sci-kit learn has an excellent data set generator. One of them is `make_blobs`. Below, you can find the code to create two blobs using the `make_blobs` function. Afterwards, you'll use this data to build our own SVM from scratch! 
 
 
 ```python
@@ -52,23 +52,23 @@ $ w x^{(i)} + b \geq 1$  if $y ^{(i)} = 1$
 
 $ w x^{(i)} + b \leq -1$  if $y ^{(i)} = -1$
 
-And as an objective function we're maximizing $\dfrac{2}{\lVert w \rVert}$. To make things easier, we'll minimizing $\lVert w \rVert$
+And as an objective function you're maximizing $\dfrac{2}{\lVert w \rVert}$. To make things easier, you can instead minimize $\lVert w \rVert$
 
-Note that $y^{(i)}$ is the class label here. Looking at our data the labels are stored in `labels`. Let's have a look at the labels by printing them below.
-
-
-```python
-# your code here
-```
-
-Before we start to write down the optimization problem, let's split our data in the two classes. Name them `class_1` and `class_2`.
+Note that $y^{(i)}$ is the class label here. Looking at our data the labels are stored in `labels`. Take a look at the labels by printing them below.
 
 
 ```python
 # your code here
 ```
 
-Let's find a wat to create a hyperplane (in this case, a line) that can maximize the difference between the two classes. 
+Before you start to write down the optimization problem, split the data in the two classes. Name them `class_1` and `class_2`.
+
+
+```python
+# your code here
+```
+
+Next, you need to find a way to create a hyperplane (in this case, a line) that can maximize the difference between the two classes. Here's a pseudocode outline:
 - First, `import cvxpy as cp`
 - Next, define the variables. note that b and w are variables (what are the dimensions?)
 - Then, build the constraints. We have two constraints here
@@ -80,7 +80,7 @@ Let's find a wat to create a hyperplane (in this case, a line) that can maximize
 
 
 ```python
-
+#Your code here
 
 # Define the variables
 
@@ -101,7 +101,7 @@ Let's find a wat to create a hyperplane (in this case, a line) that can maximize
 
 ```
 
-Below, we provide you with a helper function to plot your result.
+Great! Below, is a helper function to assist you in plotting the result of your SVM classifier.
 
 
 ```python
@@ -128,11 +128,11 @@ def plotBoundaries(x, y, w, b):
     plt.ylim([np.floor(np.min([x[:,1],y[:,1]])),np.ceil(np.max([x[:,1],y[:,1]]))])
 ```
 
-Now use the helper function to plot your result. To get the values of `w` and `b`. use the two variables with `.value`. The two first arguments should be the two classes, `class_1` and `class_2`.
+Use the helper function to plot your result. To get the values of `w` and `b`. use the two variables with `.value`. The two first arguments should be the two classes, `class_1` and `class_2`.
 
 ## A more complex problem
 
-Let's look at another problem by running the code below. It's clear that now, the two classes are not perfectly linearly separable.
+Now, take a look at another problem by running the code below. This example will be a little trickier as the two classes are not perfectly linearly separable.
 
 
 ```python
@@ -157,7 +157,7 @@ Copy your optimization code from the Max Margin Classifier and look at the probl
 
 ### Explain what's happening
 
-The problem status is "infeasible": the problem is not linearly separable, in other words, we cannot draw one straight line that separates the two classes.
+The problem status is "infeasible": the problem is not linearly separable, in other words, it is impossible to draw one straight line that separates the two classes.
 
 ## Building a Soft Margin Classifier
 
@@ -172,7 +172,7 @@ The objective function is
 
  $$\dfrac{1}{2}\lVert w \rVert^2+ C(\sum_i \xi^{(i)})$$
  
- We created the new data set again below. Let's use the code for the SVM optimization again, but adjust for the slack parameters $\xi$ (ksi or xi).
+Use the code for the SVM optimization again, but adjust for the slack parameters $\xi$ (ksi or xi).
  
 Some important things to note:
 - Every $\xi$ needs to be positive, that should be added as constraints
@@ -236,4 +236,4 @@ Now go ahead and experiment with the hyperparameter C (making it both larger and
 
 ## Summary
 
-Great! You now understand the rationale behind support vector machines. Wouldn't it be great to have a library that did this for you? Well, you're lucky: scikit-learn has an SVM-module which automizes all of this. In the next lab, you'll learn how to use this scikit-learn module!
+Great! You now understand the rationale behind support vector machines. Wouldn't it be great to have a library that did this for you? Well, you're lucky: sci-kit learn has an SVM-module which automates all of this. In the next lab, you'll take a look at using this prebuilt SVM tool!
