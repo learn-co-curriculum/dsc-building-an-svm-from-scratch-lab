@@ -14,9 +14,9 @@ In this lab you will:
 
 ## The data
 
-Support Vector Machines can be used on for any $n$-dimensional feature space. However, for this lab, you'll focus on a more limited 2-dimensional feature space so that you can easily visualize the results.
+Support Vector Machines can be used for any $n$-dimensional feature space. However, for this lab, you'll focus on a more limited 2-dimensional feature space so that you can easily visualize the results.
 
-Scikit-learn has an excellent dataset generator. One of them is `make_blobs()`. Below, you can find the code to create two blobs using the `make_blobs()` function. Afterwards, you'll use this data to build your own SVM from scratch! 
+Scikit-learn has an excellent set of dataset generator functions. One of them is `make_blobs()`. Below, you can find the code to create two blobs using the `make_blobs()` function. Afterward, you'll use this data to build your own SVM from scratch! 
 
 
 ```python
@@ -38,15 +38,15 @@ plt.scatter(X[:, 0], X[:, 1], c=labels, s=25);
 
 ## Build a Max Margin classifier
 
-Since you are aiming to maximize the margin between the decision boundary and the support vectors, creating a support vector machine boils down to solving a convex optimization problem. As such, you can use the the Python library `cvxpy` to do so. More information can be found [here](http://www.cvxpy.org/).
+Since you are aiming to maximize the margin between the decision boundary and the support vectors, creating a support vector machine boils down to solving a convex optimization problem. As such, you can use the Python library `cvxpy` to do so. More information can be found [here](http://www.cvxpy.org/).
 
 You may have not used `cvxpy` before, so make sure it is installed on your local computer using `pip install cvxpy`.
 
 The four important commands to be used here are:
 
-- `cp.Variable()` where you either don't include antything between `()` or, if the variable is an array with multiple elements, the number of elements.
-- `cp.Minimize()` or `cp.Maximize()`, with between the parentheses the element to be maximized.
-- `cp.Problem(objective, constraints)`, the objective is generally a stored minimization or maximization objective, the constraints are listed constraints. Constraints can be added by a "+" sign. 
+- `cp.Variable()` where you either don't include anything between `()` or, if the variable is an array with multiple elements, the number of elements.
+- `cp.Minimize()` or `cp.Maximize()`, with the element to be maximized passed in as a paramater.
+- `cp.Problem(objective, constraints)`, the objective is generally a stored minimization or maximization objective, and the constraints are listed constraints. Constraints can be added by a "+" sign. 
 - Next, you should store your `cp.Problem` in an object and use `object.solve()` to solve the optimization problem.
 
 Recall that we're trying to solve this problem:
@@ -55,7 +55,7 @@ $ w x^{(i)} + b \geq 1$  if $y ^{(i)} = 1$
 
 $ w x^{(i)} + b \leq -1$  if $y ^{(i)} = -1$
 
-And as an objective function you're maximizing $\dfrac{2}{\lVert w \rVert}$. To make things easier, you can instead minimize $\lVert w \rVert$
+And, the objective function you're maximizing is $\dfrac{2}{\lVert w \rVert}$. To make things easier, you can instead minimize $\lVert w \rVert$
 
 Note that $y^{(i)}$ is the class label. Take a look at the labels by printing them below.
 
@@ -127,7 +127,7 @@ print('Problem Status: %s'%prob.status)
     Problem Status: optimal
 
 
-Great! Below, is a helper function to assist you in plotting the result of your SVM classifier.
+Great! Below is a helper function to assist you in plotting the result of your SVM classifier.
 
 
 ```python
@@ -308,7 +308,7 @@ print('Problem Status: %s'%prob.status)
     Problem Status: optimal
 
 
-Plot your result again
+Plot your result again.
 
 
 ```python
@@ -325,4 +325,4 @@ Now go ahead and experiment with the hyperparameter $C$ (making it both larger a
 
 ## Summary
 
-Great! You now understand the rationale behind support vector machines. Wouldn't it be great to have a library that did this for you? Well, you're lucky: scikit-learn has an SVM module which automates all of this. In the next lab, you'll take a look at using this pre-built SVM tool!
+Great! You now understand the rationale behind support vector machines. Wouldn't it be great to have a library that did this for you? Well, you're lucky: scikit-learn has an SVM module that automates all of this. In the next lab, you'll take a look at using this pre-built SVM tool!
